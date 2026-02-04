@@ -23,9 +23,14 @@ jobs:
         with:
           activate-environment: true
           python-version: ${{ matrix.python-version }}
-          enable-cache: false
+          enable-cache: true
 
       - name: Check Python version
         run: |
           python --version
-    
+
+      - name: Install a package with uv
+        run: uv pip install requests
+
+      - name: Minimize uv cache
+        run: uv cache prune --ci
