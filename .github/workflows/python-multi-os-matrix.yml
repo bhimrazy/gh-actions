@@ -23,6 +23,7 @@ jobs:
         with:
           activate-environment: true
           python-version: ${{ matrix.python-version }}
+          enable-cache: false
 
       - name: Check Python version
         run: |
