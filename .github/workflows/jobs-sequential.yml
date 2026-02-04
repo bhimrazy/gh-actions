@@ -1,0 +1,25 @@
+name: Sequential Jobs Example
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Build App
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Building app"
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - run: echo "Running tests"
+
+  deploy:
+    name: Deploy App
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - run: echo "Deploying app"

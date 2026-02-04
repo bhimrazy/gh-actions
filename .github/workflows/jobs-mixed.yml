@@ -1,0 +1,52 @@
+name: Mixed Jobs Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # Parallel builds
+  backend-build:
+    name: Build Backend
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Building backend"
+
+  frontend-build:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Building frontend"
+
+  lint:
+    name: Run Linter
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running linter"
+
+  # Sequential tests
+  backend-test:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    needs: backend-build
+    steps:
+      - run: echo "Testing backend"
+
+  frontend-test:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+    needs: frontend-build
+    steps:
+      - run: echo "Testing frontend"
+
+  # Final deploy depends on multiple jobs
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    needs:
+      - backend-test
+      - frontend-test
+      - lint
+    steps:
+      - run: echo "Deploying application"
