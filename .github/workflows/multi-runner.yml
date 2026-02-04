@@ -1,0 +1,21 @@
+name: Multi-Runner Job Example
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        name: Build on Multiple Runners
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest, macos-latest]
+
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v6
+
+            - name: Run Example Command
+              run: echo "Running on ${{ matrix.os }}"
